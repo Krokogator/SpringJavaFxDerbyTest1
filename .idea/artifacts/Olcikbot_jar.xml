@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Olcikbot:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Olcikbot_jar</output-path>
+    <root id="archive" name="Olcikbot.jar">
+      <element id="module-output" name="Olcikbot" />
+    </root>
+  </artifact>
+</component>
