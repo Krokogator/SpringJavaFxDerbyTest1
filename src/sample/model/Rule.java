@@ -4,9 +4,8 @@ import java.util.List;
 
 public class Rule {
     public String name;
-    public List<Action> actions;
 
-    public void execute(){
-
+    public Rule(String name){
+        this.name = name;
     }
 }

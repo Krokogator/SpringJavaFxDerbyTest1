@@ -12,25 +12,27 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.controller.MainWindow">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.view.controller.MainWindow">
     <top>
         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <items>
-                <Label text="Login:" />
-                <TextField fx:id="loginField" onKeyPressed="#actionEnterPressed" />
-                <Label text="Password" />
-                <PasswordField fx:id="passwordField" onKeyPressed="#actionEnterPressed" />
-                <Button fx:id="buttonLogin" onAction="#actionLogin" text="Log in" />
+                <Label text="Login:"/>
+                <TextField fx:id="loginField" onKeyPressed="#actionEnterPressed"/>
+                <Label text="Password"/>
+                <PasswordField fx:id="passwordField" onKeyPressed="#actionEnterPressed"/>
+                <Button fx:id="buttonLogin" onAction="#actionLogin" text="Log in"/>
                 <Pane HBox.hgrow="always"/>
                 <Separator orientation="VERTICAL" prefWidth="30.0"/>
                 <ComboBox prefWidth="150.0" fx:id="strategyComboBox"/>
-                <Button onAction="#actionTest" text="Run" />
-                <Separator orientation="VERTICAL" prefWidth="30.0" />
+                <Button onAction="#actionTest" text="Run"/>
+                <Separator orientation="VERTICAL" prefWidth="30.0"/>
                 <Button contentDisplay="CENTER" mnemonicParsing="false" text="Settings" onAction="#actionSettings"/>
             </items>
         </ToolBar>
     </top>
     <center>
-        <WebView fx:id="webPanel" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+        <WebView fx:id="webPanel" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
     </center>
 </BorderPane>

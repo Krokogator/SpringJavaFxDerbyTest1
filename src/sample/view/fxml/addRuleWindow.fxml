@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="sample.view.controller.AddRuleWindow"
+      prefHeight="400.0" prefWidth="600.0"
+      alignment="CENTER">
+
+    <padding>
+        <Insets bottom="8" top="8" left="8" right="8"/>
+    </padding>
+
+    <TextField fx:id="loginField" onKeyPressed="#actionEnterPressed" />
+</VBox>

@@ -1,6 +1,5 @@
 package sample.controller;
 
-import sample.model.Action;
 import sample.model.Rule;
 
 import java.util.List;
@@ -8,8 +7,17 @@ import java.util.List;
 public class RuleController {
     private List<Rule> rules;
 
-    public void addRule(String name, List<Action> actions){
-        Rule rule = new Rule();
+    public void addRule(String ruleName){
+        if(!contains(ruleName)){
+           rules.add(new Rule(ruleName));
+        }
+    }
 
+    public List<Rule> getRules(){
+        return rules;
+    }
+
+    public boolean contains(String ruleName){
+        return rules.stream().anyMatch(x->x.name.equals(ruleName));
     }
 }

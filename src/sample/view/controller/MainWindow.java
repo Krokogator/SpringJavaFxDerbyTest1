@@ -14,14 +14,32 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.PopupFeatures;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import org.w3c.dom.Element;
+import sample.model.Rule;
+import sample.rules.IComponent;
+import sample.rules.RuleVisitor;
+import sample.rules.Rules;
+import sample.rules.clickers.Slider;
+import sample.rules.containers.Container;
+import sample.rules.containers.Loop;
+import sample.rules.containers.RandomContainer;
+import sample.serializable.DeserializeFromXML;
+import sample.serializable.SerializeToXML;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 
@@ -49,6 +67,8 @@ public class MainWindow implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         engine = webPanel.getEngine();
+        engine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
+        System.out.println(engine.getUserAgent());
         engine.load(htLink);
 
         engine.getLoadWorker().stateProperty().addListener(
@@ -73,6 +93,8 @@ public class MainWindow implements Initializable {
                         "Trenuj"
                 );
         strategyComboBox.setItems(options);
+
+        //initPopupHandler();
     }
 
     public void login(){
@@ -120,10 +142,40 @@ public class MainWindow implements Initializable {
     }
 
     public void actionTest(ActionEvent actionEvent) {
-        try{
+        //loop.add(new sample.rules.clickers.Button("feed-button"));
+        //loop.add(new sample.rules.clickers.Button("boutonPanser"));
+        //loop.add(new sample.rules.clickers.Button("boutonCoucher"));
 
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        Rules rulesController = new Rules();
+        List rules = new ArrayList();
+        Container mainContainer = new Container();
+
+            RandomContainer randomContainer = new RandomContainer();
+                Container container1 = new Container();
+                container1.add(new sample.rules.clickers.Button("boutonNourrir"));
+                container1.add(new Slider("haySlider", "getElementsByClassName('section-fourrage-target')[0]"));
+            randomContainer.add(container1);
+                Container container2 = new Container();
+                container2.add(new sample.rules.clickers.Button("boutonBalade-foret"));
+            randomContainer.add(container2);
+
+        mainContainer.add(randomContainer);
+
+        mainContainer.add(new sample.rules.clickers.Button("nav-next"));
+        rules.add(mainContainer);
+        rulesController.setComponents(rules);
+
+        //rulesController.save("rules");
+        //rulesController.load("rules");
+
+        rules = rulesController.getComponents();
+
+        RuleVisitor visitor = new RuleVisitor(engine);
+
+        for (IComponent kompot: (List<IComponent>)rules) {
+            new Thread(() -> {
+                kompot.acceptVisitor(visitor );
+            }).start();
         }
     }
 
@@ -146,5 +198,31 @@ public class MainWindow implements Initializable {
             stage.show();
         } catch (IOException e) {
         }
+    }
+
+    private void initPopupHandler(){
+        WebView wv = new WebView();
+        wv.getEngine().setCreatePopupHandler(new Callback<PopupFeatures, WebEngine>() {
+
+            @Override
+            public WebEngine call(PopupFeatures p) {
+                Stage stage = new Stage(StageStyle.UTILITY);
+                WebView wv2 = new WebView();
+                stage.setScene(new Scene(wv2));
+                stage.show();
+                return wv2.getEngine();
+            }
+        });
+
+
+        StackPane root = new StackPane();
+        root.getChildren().add(wv);
+
+        Scene scene = new Scene(root, 300, 250);
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Hello World!");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        wv.getEngine().load("http://www.google.pl");
     }
 }
